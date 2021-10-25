@@ -1,0 +1,129 @@
+const Product = require("../models/Product");
+const User = require("../models/User");
+const Order = require("../models/Order");
+const HandPickedProduct = require("../models/HandPickProduct");
+const jwt = require("jsonwebtoken");
+const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
+
+module.exports.searchProduct = async (req, res) => {
+  var regex = new RegExp(req.params.name, "i");
+  Product.find({ name: regex }).then((result) => {
+    res.status(200).json(result);
+  });
+};
+
+module.exports.getAllProduct = async (req, res) => {
+  try {
+    const data = await Product.find();
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.searchLowPriceProduct = async (req, res) => {
+  try {
+    const data = await Product.find({}).sort({ price: 1 });
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.searchHighPriceProduct = async (req, res) => {
+  try {
+    const data = await Product.find({}).sort({ price: -1 });
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.searchDiscountProduct = async (req, res) => {
+  try {
+    const data = await Product.find({ discount: "yes" });
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.searchPopularProduct = async (req, res) => {
+  try {
+    const data = await Product.find({ popular: "yes" });
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.viewHandPickedProduct = async (req, res) => {
+  try {
+    const data = await HandPickedProduct.find();
+    res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.filterProduct = async (req, res) => {
+  try {
+    const response = await Product.find(req.query);
+    console.log(response);
+    res.status(200).json({
+      status: "success",
+      data: {
+        response,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.viewProductAfterPayment = async (req, res) => {
+  const accessToken = req.cookies.accessToken;
+
+  if (accessToken) {
+    jwt.verify(accessToken, JWT_AUTH_TOKEN, async (err, phone) => {
+      const { data } = phone;
+      const getUser = await User.findOne({ phone: data });
+      const { _id } = getUser;
+      const getProduct = await Order.find({
+        user: _id,
+        paymentStatus: "completed",
+      });
+      res.status(200).json({ response: getProduct });
+    });
+  }
+};
+
+module.exports.addProduct = async (req, res) => {
+  try {
+    const {
+      name,
+      price,
+      quantity,
+      discount,
+      popular,
+      discount_percentage,
+      product_brand,
+      product_form,
+    } = req.body;
+
+    const create = await Product.create({
+      name,
+      price,
+      quantity,
+      discount,
+      popular,
+      discount_percentage,
+      product_brand,
+      product_form,
+    });
+
+    res.status(201).json({ msg: "sccessfully created" });
+  } catch (error) {
+    console.log(error);
+  }
+};
