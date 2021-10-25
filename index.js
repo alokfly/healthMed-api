@@ -18,7 +18,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({ origin: "http://localhost:5000", credentials: true }));
+app.use(cors({ origin: "http://localhost:4000", credentials: true }));
 app.use(cookieParser());
 
 connect();
@@ -34,7 +34,7 @@ app.use("/", dealOfTheDayRoute);
 app.use("/", topCategoryRoute);
 app.use("/", needHelpRoute);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log("Your app is running");
