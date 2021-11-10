@@ -21,7 +21,7 @@ let accessTokens = [];
 
 module.exports.sendOtp = async = (req, res) => {
   const phone = req.body.phone;
-  const otp = Math.floor(100000 + Math.random() * 900000);
+  const otp = Math.floor(1000 + Math.random() * 9000);
   const ttl = 2 * 60 * 1000;
   const expires = Date.now() + ttl;
   const data = `${phone}.${otp}.${expires}`;
