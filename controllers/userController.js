@@ -38,7 +38,7 @@ module.exports.sendOtp = async = (req, res) => {
     .catch((err) => console.error(err));
 
   // res.status(200).send({ phone, hash: fullHash, otp });  // this bypass otp via api only for development instead hitting twilio api all the time
-  res.status(200).send({ phone, hash: fullHash }); // Use this way in Production
+  res.status(200).send({ phone, hash: fullHash, otp }); // Use this way in Production
 };
 
 module.exports.verifyOtp = async = (req, res) => {
