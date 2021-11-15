@@ -2,17 +2,16 @@ const DealOfTheDay = require("../models/DealOfTheDay");
 var ObjectId = require("mongodb").ObjectID;
 
 module.exports.addDealOfTheDay = async (req, res) => {
-  let profile = req.files ? req.files.filename : null;
   const { name, price, quantity, discount, discount_price, popular } = req.body;
   try {
-    const addProduct = DealOfTheDay.create({
+    const addProduct = await DealOfTheDay.create({
       name,
       price,
       quantity,
       discount,
       discount_price,
       popular,
-      productPictures: profile,
+      productPictures: req.files,
     });
     res.status(200).json({ msg: "Product successfully added" });
   } catch (error) {
