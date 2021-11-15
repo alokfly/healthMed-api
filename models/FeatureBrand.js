@@ -7,7 +7,11 @@ const featureBrandSchema = new Schema(
     },
     category: {
       type: String,
-      require: true,
+      required: true,
+    },
+    bannerImage: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
