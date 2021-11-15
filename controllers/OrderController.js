@@ -24,7 +24,7 @@ module.exports.addOrder = (req, res) => {
         orderStatus: req.body.orderStatus,
       });
 
-      return res.status(201).json({ response });
+      return res.status(201).json({ msg: "Order placed successfully" });
     });
   }
 };

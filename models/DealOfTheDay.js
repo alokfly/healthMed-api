@@ -4,9 +4,7 @@ const dealOfTheDaySchema = new Schema(
     name: {
       type: String,
       required: true,
-      trim: true,
     },
-
     price: {
       type: Number,
       required: true,
@@ -26,7 +24,10 @@ const dealOfTheDaySchema = new Schema(
       type: String,
       required: true,
     },
-    productPictures: [{ img: { type: String } }],
+    productPictures: {
+      type: Array,
+      required: true,
+    },
   },
   { timestamps: true }
 );
