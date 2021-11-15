@@ -3,15 +3,7 @@ var ObjectId = require("mongodb").ObjectID;
 
 module.exports.addDealOfTheDay = async (req, res) => {
   let profile = req.files ? req.files.filename : null;
-  const {
-    name,
-    price,
-    quantity,
-    discount,
-    discount_price,
-    popular,
-    currentImage,
-  } = req.body;
+  const { name, price, quantity, discount, discount_price, popular } = req.body;
   try {
     const addProduct = DealOfTheDay.create({
       name,
