@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const connect = require("./config/db");
 const router = require("./routes/userRoute");
 const productRoute = require("./routes/productRoute");
@@ -13,12 +15,15 @@ const topCategoryRoute = require("./routes/topCategoryRoutes");
 const needHelpRoute = require("./routes/needHelpRoutes");
 const handPickedItemRoute = require("./routes/handPickedItemRoutes");
 const adminRoute = require("./routes/adminRoute");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
+
 require("dotenv").config();
 const app = express();
+
 app.use(cors());
-app.use(express.json());
+app.use(cookieParser());
+
+app.use(express.urlencoded({ extended: true }));
+app.use("/public", express.static("public"));
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -28,7 +33,6 @@ app.use(function (req, res, next) {
   );
   next();
 });
-app.use(cookieParser());
 
 connect();
 app.use(bodyParser.json());

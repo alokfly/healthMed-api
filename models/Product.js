@@ -6,32 +6,47 @@ const productSchema = new Schema(
       required: true,
     },
     title: {
-      type: Number,
+      type: String,
       required: true,
     },
     category: {
-      type: Number,
-      required: true,
-    },
-    discount: {
       type: String,
       required: true,
     },
-    discount_percentage: {
-      type: Number,
-    },
-    product_brand: {
+    itemCategory: {
       type: String,
       required: true,
     },
-    product_form: {
+    pack_size: {
       type: String,
       required: true,
     },
-    popular: {
+    country_origin: {
       type: String,
       required: true,
     },
+    disclaimer: {
+      type: String,
+      required: true,
+    },
+
+    brand_name: {
+      type: String,
+      required: true,
+    },
+    manufacturer_name: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: String,
+      required: true,
+    },
+    discount_price: {
+      type: String,
+      required: true,
+    },
+
     productPictures: [{ img: { type: String } }],
   },
   { timestamps: true }
