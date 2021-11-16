@@ -45,11 +45,17 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    discount_percentage: {
+      type: String,
+    },
     productForm: {
       type: String,
       required: true,
     },
-    productPictures: [{ img: { type: String } }],
+    productPictures: {
+      type: Array,
+      required: true,
+    },
   },
   { timestamps: true }
 );

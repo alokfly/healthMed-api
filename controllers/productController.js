@@ -119,7 +119,6 @@ module.exports.addProduct = async (req, res) => {
 
     const pricePercent = ((price - discount_price) * 100) / price;
     const discountPer = Math.round(pricePercent);
-
     const create = await Product.create({
       description,
       title,
