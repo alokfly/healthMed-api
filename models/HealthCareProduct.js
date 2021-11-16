@@ -4,9 +4,7 @@ const healthCareProductSchema = new Schema(
     name: {
       type: String,
       required: true,
-      trim: true,
     },
-
     price: {
       type: Number,
       required: true,
@@ -26,8 +24,11 @@ const healthCareProductSchema = new Schema(
       type: String,
       required: true,
     },
-    productPictures: [{ img: { type: String } }],
+    productPictures: {
+      type: Array,
+      required: true,
+    },
   },
   { timestamps: true }
 );
-module.exports = model("HealthCareProduct", healthCareProductSchema);
+module.exports = model("healthCareProduct", healthCareProductSchema);

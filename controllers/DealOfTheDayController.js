@@ -3,6 +3,7 @@ var ObjectId = require("mongodb").ObjectID;
 
 module.exports.addDealOfTheDay = async (req, res) => {
   const { name, price, quantity, discount, discount_price, popular } = req.body;
+  console.log(req.body);
   try {
     const addProduct = await DealOfTheDay.create({
       name,
