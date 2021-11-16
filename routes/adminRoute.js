@@ -5,7 +5,7 @@ const {
   login,
   emailSendAdmin,
   changePasswordAdmin,
-} = require("../controllers/adminController");
+} = require("../controllers/AdminController");
 
 router.post("/registerAdmin", register);
 router.post("/loginAdmin", login);
