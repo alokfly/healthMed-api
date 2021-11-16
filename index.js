@@ -12,6 +12,7 @@ const dealOfTheDayRoute = require("./routes/dealOfTheDayRoutes");
 const topCategoryRoute = require("./routes/topCategoryRoutes");
 const needHelpRoute = require("./routes/needHelpRoutes");
 const handPickedItemRoute = require("./routes/handPickedItemRoutes");
+const adminRoute = require("./routes/adminRoute");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
@@ -35,6 +36,7 @@ app.use("/", dealOfTheDayRoute);
 app.use("/", topCategoryRoute);
 app.use("/", needHelpRoute);
 app.use("/", handPickedItemRoute);
+app.use("/", adminRoute);
 
 const PORT = process.env.PORT || 4000;
 
