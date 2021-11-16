@@ -11,6 +11,7 @@ const featureBrandRoute = require("./routes/featureBrandRoutes");
 const dealOfTheDayRoute = require("./routes/dealOfTheDayRoutes");
 const topCategoryRoute = require("./routes/topCategoryRoutes");
 const needHelpRoute = require("./routes/needHelpRoutes");
+const handPickedItemRoute = require("./routes/handPickedItemRoutes");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
@@ -33,6 +34,7 @@ app.use("/", featureBrandRoute);
 app.use("/", dealOfTheDayRoute);
 app.use("/", topCategoryRoute);
 app.use("/", needHelpRoute);
+app.use("/", handPickedItemRoute);
 
 const PORT = process.env.PORT || 4000;
 
