@@ -29,7 +29,6 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-
     brand_name: {
       type: String,
       required: true,
@@ -46,7 +45,10 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-
+    productForm: {
+      type: String,
+      required: true,
+    },
     productPictures: [{ img: { type: String } }],
   },
   { timestamps: true }

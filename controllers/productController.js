@@ -99,30 +99,45 @@ module.exports.viewProductAfterPayment = async (req, res) => {
 };
 
 module.exports.addProduct = async (req, res) => {
+  let profile = req.files;
+
   try {
     const {
-      name,
+      description,
+      title,
+      category,
+      itemCategory,
+      pack_size,
+      country_origin,
+      disclaimer,
+      brand_name,
+      manufacturer_name,
       price,
-      quantity,
-      discount,
-      popular,
-      discount_percentage,
-      product_brand,
-      product_form,
+      discount_price,
+      productForm,
     } = req.body;
 
+    const pricePercent = ((price - discount_price) * 100) / price;
+    const discountPer = Math.round(pricePercent);
+
     const create = await Product.create({
-      name,
+      description,
+      title,
+      category,
+      itemCategory,
+      pack_size,
+      country_origin,
+      disclaimer,
+      brand_name,
+      manufacturer_name,
       price,
-      quantity,
-      discount,
-      popular,
-      discount_percentage,
-      product_brand,
-      product_form,
+      discount_price,
+      discount_percentage: discountPer,
+      productForm,
+      productPictures: profile,
     });
 
-    res.status(201).json({ msg: "sccessfully created" });
+    res.status(201).json({ msg: " product sccessfully added" });
   } catch (error) {
     console.log(error);
   }

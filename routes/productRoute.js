@@ -1,6 +1,18 @@
 const app = require("express");
 const router = app.Router();
 
+var multer = require("multer");
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "_" + file.originalname);
+  },
+});
+
+var upload = multer({ storage: storage });
+
 const {
   searchProduct,
   searchLowPriceProduct,
@@ -28,6 +40,6 @@ router.get(
   authenticateUser,
   viewProductAfterPayment
 );
-router.post("/addProduct", addProduct);
+router.post("/addProduct", upload.array("myField", 5), addProduct);
 
 module.exports = router;
