@@ -4,6 +4,7 @@ const Order = require("../models/Order");
 const HandPickedProduct = require("../models/HandPickProduct");
 const jwt = require("jsonwebtoken");
 const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
+var ObjectId = require("mongodb").ObjectID;
 
 module.exports.searchProduct = async (req, res) => {
   var regex = new RegExp(req.params.name, "i");
@@ -100,7 +101,6 @@ module.exports.viewProductAfterPayment = async (req, res) => {
 
 module.exports.addProduct = async (req, res) => {
   let profile = req.files;
-
   try {
     const {
       description,
@@ -137,6 +137,63 @@ module.exports.addProduct = async (req, res) => {
     });
 
     res.status(201).json({ msg: " product sccessfully added" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.editProduct = async (req, res) => {
+  let profile = req.files;
+  try {
+    const {
+      description,
+      title,
+      category,
+      itemCategory,
+      pack_size,
+      country_origin,
+      disclaimer,
+      brand_name,
+      manufacturer_name,
+      price,
+      discount_price,
+      productForm,
+    } = req.body;
+
+    const pricePercent = ((price - discount_price) * 100) / price;
+    const discountPer = Math.round(pricePercent);
+
+    const create = await Product.findByIdAndUpdate(
+      { _id: ObjectId(req.params.id) },
+      {
+        description,
+        title,
+        category,
+        itemCategory,
+        pack_size,
+        country_origin,
+        disclaimer,
+        brand_name,
+        manufacturer_name,
+        price,
+        discount_price,
+        discount_percentage: discountPer,
+        productForm,
+        productPictures: profile,
+      }
+    );
+    res.status(201).json({ msg: " product sccessfully updated" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.deleteProduct = async (req, res) => {
+  try {
+    const response = await Product.findByIdAndDelete({
+      _id: ObjectId(req.params.id),
+    });
+    res.status(200).send({ msg: "Product deleted successfully" });
   } catch (error) {
     console.log(error);
   }

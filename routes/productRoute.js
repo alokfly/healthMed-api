@@ -24,6 +24,8 @@ const {
   viewProductAfterPayment,
   filterProduct,
   addProduct,
+  editProduct,
+  deleteProduct,
 } = require("../controllers/productController");
 const { authenticateUser } = require("../controllers/userController");
 
@@ -41,5 +43,7 @@ router.get(
   viewProductAfterPayment
 );
 router.post("/addProduct", upload.array("myField", 5), addProduct);
+router.post("/editProduct/:id", upload.array("myField", 5), editProduct);
+router.get("/deleteProduct/:id", deleteProduct);
 
 module.exports = router;
