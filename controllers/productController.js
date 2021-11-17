@@ -13,15 +13,6 @@ module.exports.searchProduct = async (req, res) => {
   });
 };
 
-module.exports.getAllProduct = async (req, res) => {
-  try {
-    const data = await Product.find();
-    res.status(200).json(data);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 module.exports.searchLowPriceProduct = async (req, res) => {
   try {
     const data = await Product.find({}).sort({ price: 1 });
@@ -137,6 +128,15 @@ module.exports.addProduct = async (req, res) => {
     });
 
     res.status(201).json({ msg: " product sccessfully added" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.getAllProduct = async (req, res) => {
+  try {
+    const getProduct = await Product.find();
+    res.status(200).json({ data: getProduct });
   } catch (error) {
     console.log(error);
   }
