@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
 const User = require("../models/User");
 const Order = require("../models/Order");
+const Feature = require("../models/Feature");
 const HandPickedProduct = require("../models/HandPickProduct");
 const jwt = require("jsonwebtoken");
 const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
@@ -49,10 +50,37 @@ module.exports.searchPopularProduct = async (req, res) => {
   }
 };
 
-module.exports.viewHandPickedProduct = async (req, res) => {
+module.exports.getFeaturedBrandProduct = async (req, res) => {
   try {
-    const data = await HandPickedProduct.find();
-    res.status(200).json(data);
+    const data = await Product.find({ category: "Featured Brands" });
+    res.status(200).json({ response: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.getHandPickedProduct = async (req, res) => {
+  try {
+    const data = await Product.find({ category: "Handpicked Item" });
+    res.status(200).json({ response: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.getDealsOfTheDayProduct = async (req, res) => {
+  try {
+    const data = await Product.find({ category: "Deals of the Day" });
+    res.status(200).json({ response: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.getHandPickedProduct = async (req, res) => {
+  try {
+    const data = await Product.find({ category: "Handpicked Item" });
+    res.status(200).json({ response: data });
   } catch (error) {
     console.log(error);
   }
@@ -194,6 +222,56 @@ module.exports.deleteProduct = async (req, res) => {
       _id: ObjectId(req.params.id),
     });
     res.status(200).send({ msg: "Product deleted successfully" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.addFeature = async (req, res) => {
+  const { feature } = req.body;
+  try {
+    const addFeature = await Feature.create({
+      product_id: req.params.id,
+      feature,
+    });
+    res.status(200).json({ msg: "feature successfully added" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.getFeature = async (req, res) => {
+  try {
+    const getFeature = await Feature.find({
+      product_id: ObjectId(req.params.id),
+    });
+    res.status(200).json({ response: getFeature });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.editFeature = async (req, res) => {
+  const { feature } = req.body;
+  try {
+    const create = await Feature.findByIdAndUpdate(
+      { _id: ObjectId(req.params.id) },
+      {
+        feature,
+      }
+    );
+    res.status(201).json({ msg: "feature sccessfully updated" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.deleteFeature = async (req, res) => {
+  try {
+    const response = await Feature.findByIdAndDelete({
+      _id: ObjectId(req.params.id),
+    });
+    res.status(200).send({ msg: "Feature deleted successfully" });
   } catch (error) {
     console.log(error);
   }

@@ -19,13 +19,19 @@ const {
   searchHighPriceProduct,
   searchDiscountProduct,
   searchPopularProduct,
-  viewHandPickedProduct,
   viewProductAfterPayment,
   filterProduct,
   addProduct,
   getAllProduct,
   editProduct,
   deleteProduct,
+  getFeaturedBrandProduct,
+  getHandPickedProduct,
+  addFeature,
+  getFeature,
+  editFeature,
+  deleteFeature,
+  getDealsOfTheDayProduct,
 } = require("../controllers/productController");
 const { authenticateUser } = require("../controllers/userController");
 
@@ -34,7 +40,6 @@ router.get("/searchLowPriceProduct", searchLowPriceProduct);
 router.get("/searchHighPriceProduct", searchHighPriceProduct);
 router.get("/searchDiscountProduct", searchDiscountProduct);
 router.get("/searchPopularProduct", searchPopularProduct);
-router.get("/viewHandPickedProduct", viewHandPickedProduct);
 router.get("/filterProduct", filterProduct);
 router.get(
   "/viewProductAfterPayment",
@@ -45,5 +50,14 @@ router.post("/addProduct", upload.array("myField", 5), addProduct);
 router.get("/getAllProduct", getAllProduct);
 router.post("/editProduct/:id", upload.array("myField", 5), editProduct);
 router.get("/deleteProduct/:id", deleteProduct);
+
+router.get("/getFeaturedBrandProduct", getFeaturedBrandProduct);
+router.get("/getHandPickedProduct", getHandPickedProduct);
+router.get("/getDealsOfTheDayProduct", getDealsOfTheDayProduct);
+
+router.post("/addFeature/:id", addFeature);
+router.get("/getFeature/:id", getFeature);
+router.post("/editFeature/:id", editFeature);
+router.get("/deleteFeature/:id", deleteFeature);
 
 module.exports = router;
