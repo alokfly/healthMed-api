@@ -13,8 +13,16 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 
-const { addBanner } = require("../controllers/BannerController");
+const {
+  addBanner,
+  getBanner,
+  editBanner,
+  deleteBanner,
+} = require("../controllers/BannerController");
 
 router.post("/addBanner", upload.array("myField", 5), addBanner);
+router.get("/getBanner", getBanner);
+router.post("/editBanner/:id", upload.single("myField"), editBanner);
+router.get("/deleteBanner/:id", deleteBanner);
 
 module.exports = router;
