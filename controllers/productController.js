@@ -186,30 +186,54 @@ module.exports.editProduct = async (req, res) => {
       price,
       discount_price,
       productForm,
+      currentImage,
     } = req.body;
 
     const pricePercent = ((price - discount_price) * 100) / price;
     const discountPer = Math.round(pricePercent);
 
-    const create = await Product.findByIdAndUpdate(
-      { _id: ObjectId(req.params.id) },
-      {
-        description,
-        title,
-        category,
-        itemCategory,
-        pack_size,
-        country_origin,
-        disclaimer,
-        brand_name,
-        manufacturer_name,
-        price,
-        discount_price,
-        discount_percentage: discountPer,
-        productForm,
-        productPictures: profile,
-      }
-    );
+    if (profile) {
+      const create = await Product.findByIdAndUpdate(
+        { _id: ObjectId(req.params.id) },
+        {
+          description,
+          title,
+          category,
+          itemCategory,
+          pack_size,
+          country_origin,
+          disclaimer,
+          brand_name,
+          manufacturer_name,
+          price,
+          discount_price,
+          discount_percentage: discountPer,
+          productForm,
+          productPictures: profile,
+        }
+      );
+    } else {
+      const create = await Product.findByIdAndUpdate(
+        { _id: ObjectId(req.params.id) },
+        {
+          description,
+          title,
+          category,
+          itemCategory,
+          pack_size,
+          country_origin,
+          disclaimer,
+          brand_name,
+          manufacturer_name,
+          price,
+          discount_price,
+          discount_percentage: discountPer,
+          productForm,
+          productPictures: currentImage,
+        }
+      );
+    }
+
     res.status(201).json({ msg: " product sccessfully updated" });
   } catch (error) {
     console.log(error);
