@@ -1,4 +1,6 @@
 const Order = require("../models/Order");
+const Product = require("../models/Product");
+const Cart = require("../models/Cart");
 const User = require("../models/User");
 const Address = require("../models/Address");
 const jwt = require("jsonwebtoken");
@@ -14,17 +16,43 @@ module.exports.addOrder = (req, res) => {
       const { _id } = getUser;
       const getAddress = await Address.findOne({ user: _id });
 
-      const response = Order.create({
-        user: getUser._id,
-        addressId: getAddress._id,
-        totalAmount: req.body.totalAmount,
-        items: req.body.items,
-        paymentStatus: req.body.paymentStatus,
-        paymentType: req.body.paymentType,
-        orderStatus: req.body.orderStatus,
+      Cart.deleteOne({ user: getUser._id }).exec((error, result) => {
+        if (error) return res.status(400).json({ error });
+        if (result) {
+          req.body.user = getUser._id;
+          req.body.orderStatus = [
+            {
+              type: "ordered",
+              date: new Date(),
+              isCompleted: true,
+            },
+            {
+              type: "packed",
+              isCompleted: false,
+            },
+            {
+              type: "shipped",
+              isCompleted: false,
+            },
+            {
+              type: "delivered",
+              isCompleted: false,
+            },
+          ];
+          const order = Order.create({
+            user: getUser._id,
+            addressId: getAddress._id,
+            totalAmount: req.body.totalAmount,
+            items: req.body.items,
+            paymentStatus: req.body.paymentStatus,
+            paymentType: req.body.paymentType,
+            orderStatus: req.body.orderStatus,
+          });
+          return res
+            .status(201)
+            .json({ msg: "Order placed successfully", order });
+        }
       });
-
-      return res.status(201).json({ msg: "Order placed successfully" });
     });
   }
 };
@@ -105,4 +133,29 @@ module.exports.trackOrders = async (req, res) => {
       res.status(200).json({ response: getProduct });
     });
   }
+};
+
+module.exports.updateOrderAdmin = (req, res) => {
+  Order.updateOne(
+    { _id: req.body.orderId, "orderStatus.type": req.body.type },
+    {
+      $set: {
+        "orderStatus.$": [
+          { type: req.body.type, date: new Date(), isCompleted: true },
+        ],
+      },
+    }
+  ).exec((error, order) => {
+    if (error) return res.status(400).json({ error });
+    if (order) {
+      res.status(201).json({ order });
+    }
+  });
+};
+
+module.exports.getCustomerOrdersAdmin = async (req, res) => {
+  const orders = await Order.find({})
+    .populate("items.productId", "title")
+    .exec();
+  res.status(200).json({ orders });
 };

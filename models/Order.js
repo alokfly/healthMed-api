@@ -3,12 +3,12 @@ const orderSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true,
     },
     addressId: {
       type: Schema.Types.ObjectId,
-      ref: "Address",
+      ref: "address",
       required: true,
     },
     totalAmount: {
@@ -33,20 +33,23 @@ const orderSchema = new Schema(
     ],
     paymentStatus: {
       type: String,
+      enum: ["pending", "completed", "cancelled", "refund"],
       required: true,
     },
     paymentType: {
       type: String,
+      enum: ["cod", "card"],
       required: true,
     },
     orderStatus: [
       {
         type: {
           type: String,
+          enum: ["ordered", "packed", "shipped", "delivered"],
           default: "ordered",
         },
         date: {
-          type: String,
+          type: Date,
         },
         isCompleted: {
           type: Boolean,

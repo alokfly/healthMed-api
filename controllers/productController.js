@@ -233,7 +233,6 @@ module.exports.editProduct = async (req, res) => {
         }
       );
     }
-
     res.status(201).json({ msg: " product sccessfully updated" });
   } catch (error) {
     console.log(error);

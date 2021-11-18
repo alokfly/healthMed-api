@@ -92,7 +92,7 @@ module.exports.removeCartItem = (req, res) => {
     jwt.verify(accessToken, JWT_AUTH_TOKEN, async (err, phone) => {
       const { data } = phone;
       const getUser = await User.findOne({ phone: data });
-      const { productId } = req.body.payload;
+      const { productId } = req.body;
       if (productId) {
         Cart.updateOne(
           { user: getUser._id },
