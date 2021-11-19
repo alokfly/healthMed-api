@@ -8,6 +8,7 @@ const {
   viewActiveOrders,
   trackOrders,
   updateOrderAdmin,
+  getCustomerOrders,
   getCustomerOrdersAdmin,
 } = require("../controllers/OrderController");
 const { authenticateUser } = require("../controllers/userController");
@@ -19,6 +20,7 @@ router.get("/viewActiveOrders", authenticateUser, viewActiveOrders);
 router.get("/trackOrders", authenticateUser, trackOrders);
 
 router.post("/updateOrderAdmin", updateOrderAdmin);
+router.get("/getCustomerOrders", getCustomerOrders);
 router.get("/getCustomerOrdersAdmin", getCustomerOrdersAdmin);
 
 module.exports = router;
