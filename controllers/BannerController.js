@@ -27,7 +27,6 @@ module.exports.getBanner = async (req, res) => {
 };
 
 module.exports.editBanner = async (req, res) => {
-  const { currentImage } = req.body;
   const banner = req.file ? req.file.filename : currentImage;
   try {
     const editBanner = await Banner.findByIdAndUpdate(

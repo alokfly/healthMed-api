@@ -23,6 +23,7 @@ const {
   filterProduct,
   addProduct,
   getAllProduct,
+  getProductDetail,
   editProduct,
   deleteProduct,
   getFeaturedBrandProduct,
@@ -48,6 +49,7 @@ router.get(
 );
 router.post("/addProduct", upload.array("myField", 5), addProduct);
 router.get("/getAllProduct", getAllProduct);
+router.get("/getProductDetail/:id", getProductDetail);
 router.post("/editProduct/:id", upload.array("myField", 5), editProduct);
 router.get("/deleteProduct/:id", deleteProduct);
 

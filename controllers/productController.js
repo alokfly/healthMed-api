@@ -170,6 +170,15 @@ module.exports.getAllProduct = async (req, res) => {
   }
 };
 
+module.exports.getProductDetail = async (req, res) => {
+  try {
+    const getProduct = await Product.findById({ _id: ObjectId(req.params.id) });
+    res.status(200).json({ data: getProduct });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports.editProduct = async (req, res) => {
   let profile = req.files;
   try {
