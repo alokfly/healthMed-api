@@ -1,19 +1,19 @@
 const { model, Schema } = require("mongoose");
-const topCategorySchema = new Schema(
+const CategorySchema = new Schema(
   {
     name: {
       type: String,
       required: true,
-      trim: true,
     },
-    type: {
+    top_categories: {
       type: String,
+      required: true,
     },
-    categoryImage: { type: String },
-    parentId: {
+    image: {
       type: String,
+      required: true,
     },
   },
   { timestamps: true }
 );
-module.exports = model("TopCategory", topCategorySchema);
+module.exports = model("Category", CategorySchema);

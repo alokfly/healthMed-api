@@ -1,8 +1,28 @@
 const app = require("express");
 const router = app.Router();
 
-const { viewTopCategory } = require("../controllers/CategoryController");
+var multer = require("multer");
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/images");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "_" + file.originalname);
+  },
+});
 
-router.get("/viewTopCategory", viewTopCategory);
+var upload = multer({ storage: storage });
+
+const {
+  addCategory,
+  viewCategory,
+  editCategory,
+  deleteCategory,
+} = require("../controllers/CategoryController");
+
+router.post("/addCategory", upload.single("myField"), addCategory);
+router.get("/viewCategory", viewCategory);
+router.post("/editCategory/:id", upload.single("myField"), editCategory);
+router.get("/deleteCategory/:id", deleteCategory);
 
 module.exports = router;
