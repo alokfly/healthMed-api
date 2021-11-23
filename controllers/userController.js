@@ -129,7 +129,9 @@ module.exports.addUser = async (req, res) => {
           phone: phone.data,
           status: 1,
         });
-        return res.status(200).json({ msg: "Data successfully submitted" });
+        return res
+          .status(200)
+          .json({ msg: "Data successfully submitted", addUser });
       } catch (error) {
         return res.status(500).json({ errors: error });
       }
