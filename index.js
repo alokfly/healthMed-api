@@ -16,6 +16,7 @@ const needHelpRoute = require("./routes/needHelpRoutes");
 const handPickedItemRoute = require("./routes/handPickedItemRoutes");
 const adminRoute = require("./routes/adminRoute");
 const bannerRoute = require("./routes/bannerRoutes");
+const brandRoute = require("./routes/brandRoutes");
 
 require("dotenv").config();
 const app = express();
@@ -50,6 +51,7 @@ app.use("/", needHelpRoute);
 app.use("/", handPickedItemRoute);
 app.use("/", adminRoute);
 app.use("/", bannerRoute);
+app.use("/", brandRoute);
 
 const PORT = process.env.PORT || 4000;
 

@@ -26,8 +26,8 @@ module.exports.viewCategory = async (req, res) => {
 };
 
 module.exports.editCategory = async (req, res) => {
+  const { name, top_categories, currentImage } = req.body;
   const categoryImage = req.file ? req.file.filename : currentImage;
-  const { name, top_categories } = req.body;
   try {
     const editBanner = await Category.findByIdAndUpdate(
       {
