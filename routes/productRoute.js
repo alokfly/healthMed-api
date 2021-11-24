@@ -33,6 +33,8 @@ const {
   editFeature,
   deleteFeature,
   getDealsOfTheDayProduct,
+  viewFeaturedBrandProduct,
+  viewTopCategoryProduct,
 } = require("../controllers/productController");
 const { authenticateUser } = require("../controllers/userController");
 
@@ -61,5 +63,8 @@ router.post("/addFeature/:id", addFeature);
 router.get("/getFeature/:id", getFeature);
 router.post("/editFeature/:id", editFeature);
 router.get("/deleteFeature/:id", deleteFeature);
+
+router.get("/viewFeaturedBrandProduct/:id", viewFeaturedBrandProduct);
+router.get("/viewTopCategoryProduct/:id", viewTopCategoryProduct);
 
 module.exports = router;

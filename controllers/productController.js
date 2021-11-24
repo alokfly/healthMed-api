@@ -2,7 +2,8 @@ const Product = require("../models/Product");
 const User = require("../models/User");
 const Order = require("../models/Order");
 const Feature = require("../models/Feature");
-const HandPickedProduct = require("../models/HandPickProduct");
+const Brand = require("../models/Brand");
+const Category = require("../models/Category");
 const jwt = require("jsonwebtoken");
 const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
 var ObjectId = require("mongodb").ObjectID;
@@ -304,6 +305,32 @@ module.exports.deleteFeature = async (req, res) => {
       _id: ObjectId(req.params.id),
     });
     res.status(200).send({ msg: "Feature deleted successfully" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.viewFeaturedBrandProduct = async (req, res) => {
+  try {
+    const getBrand = await Brand.findById({ _id: ObjectId(req.params.id) });
+    const featuredBrandProduct = await Product.find({
+      brand_name: getBrand.name,
+    });
+    res.status(200).json(featuredBrandProduct);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports.viewTopCategoryProduct = async (req, res) => {
+  try {
+    const getCategory = await Category.findById({
+      _id: ObjectId(req.params.id),
+    });
+    const topCategoryProduct = await Product.find({
+      itemCategory: getCategory.name,
+    });
+    res.status(200).json(topCategoryProduct);
   } catch (error) {
     console.log(error);
   }
