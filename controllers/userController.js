@@ -42,7 +42,7 @@ module.exports.sendOtp = async = (req, res) => {
   res.status(200).send({ phone, hash: fullHash, otp }); // Use this way in Production
 };
 
-module.exports.verifyOtp = async = (req, res) => {
+module.exports.verifyOtp = async (req, res) => {
   const phone = req.body.phone;
   const hash = req.body.hash;
   const otp = req.body.otp;
@@ -67,6 +67,7 @@ module.exports.verifyOtp = async = (req, res) => {
     });
     refreshTokens.push(refreshToken);
     accessTokens.push(accessToken);
+    const getUser = await User.findOne({ phone });
     res
       .status(202)
       .cookie("accessToken", accessToken, {
@@ -87,7 +88,10 @@ module.exports.verifyOtp = async = (req, res) => {
         expires: new Date(new Date().getTime() + 31557600000),
         sameSite: "strict",
       })
-      .send({ msg: "Login Successfull" });
+      .send({
+        msg: "Login Successfull",
+        isUser: getUser != null ? 1 : 0,
+      });
   } else {
     console.log("not authenticated");
     return res.status(400).send({ verification: false, msg: "Incorrect OTP" });
