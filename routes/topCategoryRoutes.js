@@ -18,11 +18,14 @@ const {
   viewCategory,
   editCategory,
   deleteCategory,
+  viewTopCat,
 } = require("../controllers/CategoryController");
 
 router.post("/addCategory", upload.single("myField"), addCategory);
 router.get("/viewCategory", viewCategory);
 router.post("/editCategory/:id", upload.single("myField"), editCategory);
 router.get("/deleteCategory/:id", deleteCategory);
+
+router.get("/viewTopCat", viewTopCat);
 
 module.exports = router;

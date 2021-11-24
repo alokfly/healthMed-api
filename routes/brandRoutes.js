@@ -18,6 +18,7 @@ const {
   viewBrand,
   editBrand,
   deleteBrand,
+  viewFeaturedBran,
 } = require("../controllers/BrandController");
 
 router.post("/addBrand", upload.single("myField"), addBrand);
@@ -25,4 +26,5 @@ router.get("/viewBrand", viewBrand);
 router.post("/editBrand/:id", upload.single("myField"), editBrand);
 router.get("/deleteBrand/:id", deleteBrand);
 
+router.get("/viewFeaturedBran", viewFeaturedBran);
 module.exports = router;

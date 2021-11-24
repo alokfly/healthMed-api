@@ -55,3 +55,12 @@ module.exports.deleteCategory = async (req, res) => {
     console.log(error);
   }
 };
+
+module.exports.viewTopCat = async (req, res) => {
+  try {
+    const viewProduct = await Category.find({ top_categories: "yes" });
+    return res.status(201).json(viewProduct);
+  } catch (error) {
+    console.log(error);
+  }
+};

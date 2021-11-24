@@ -55,3 +55,12 @@ module.exports.deleteBrand = async (req, res) => {
     console.log(error);
   }
 };
+
+module.exports.viewFeaturedBran = async (req, res) => {
+  try {
+    const viewProduct = await Brand.find({ featured_brand: "yes" });
+    return res.status(201).json(viewProduct);
+  } catch (error) {
+    console.log(error);
+  }
+};
