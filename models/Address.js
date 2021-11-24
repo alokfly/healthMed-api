@@ -3,22 +3,30 @@ const addressSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true,
     },
-    full_name: {
+    deliver_to: {
       type: String,
       required: true,
     },
-    email: {
+    pincode: {
       type: String,
       required: true,
     },
-    phone: {
+    mobile: {
       type: String,
       required: true,
     },
-    address: {
+    house_number: {
+      type: String,
+      required: true,
+    },
+    street_name: {
+      type: String,
+      required: true,
+    },
+    address_type: {
       type: String,
       required: true,
     },

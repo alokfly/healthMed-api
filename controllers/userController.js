@@ -146,18 +146,95 @@ module.exports.addAddress = async (req, res) => {
     jwt.verify(accessToken, JWT_AUTH_TOKEN, async (err, phone) => {
       const { data } = phone;
       const getUser = await User.findOne({ phone: data });
-      const { address } = req.body;
+      const {
+        deliver_to,
+        pincode,
+        mobile,
+        house_number,
+        street_name,
+        address_type,
+      } = req.body;
       try {
         const addUser = await Address.create({
           user: getUser._id,
-          full_name: getUser.full_name,
-          email: getUser.email,
-          phone: getUser.phone,
-          address,
+          deliver_to,
+          pincode,
+          mobile,
+          house_number,
+          street_name,
+          address_type,
         });
         return res.status(200).json({ msg: "address successfully submitted" });
       } catch (error) {
         return res.status(500).json({ errors: error });
+      }
+    });
+  }
+};
+
+module.exports.getAddress = async (req, res) => {
+  const accessToken = req.cookies.accessToken;
+  if (accessToken) {
+    jwt.verify(accessToken, JWT_AUTH_TOKEN, async (err, phone) => {
+      const { data } = phone;
+      const getUser = await User.findOne({ phone: data });
+      try {
+        const getAddress = await Address.find({ user: ObjectId(getUser._id) });
+        return res.status(201).json(getAddress);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+};
+
+module.exports.editAddress = async (req, res) => {
+  const accessToken = req.cookies.accessToken;
+  if (accessToken) {
+    jwt.verify(accessToken, JWT_AUTH_TOKEN, async (err, phone) => {
+      const { data } = phone;
+      const getUser = await User.findOne({ phone: data });
+      const {
+        deliver_to,
+        pincode,
+        mobile,
+        house_number,
+        street_name,
+        address_type,
+      } = req.body;
+      try {
+        const addUser = await Address.findByIdAndUpdate(
+          { _id: ObjectId(req.params.id) },
+          {
+            deliver_to,
+            pincode,
+            mobile,
+            house_number,
+            street_name,
+            address_type,
+          }
+        );
+        return res.status(200).json({ msg: "address successfully edited" });
+      } catch (error) {
+        return res.status(500).json({ errors: error });
+      }
+    });
+  }
+};
+
+module.exports.removeAddress = async (req, res) => {
+  const accessToken = req.cookies.accessToken;
+  if (accessToken) {
+    jwt.verify(accessToken, JWT_AUTH_TOKEN, async (err, phone) => {
+      const { data } = phone;
+      const getUser = await User.findOne({ phone: data });
+      try {
+        const getAddress = await Address.findByIdAndRemove({
+          _id: ObjectId(req.params.id),
+        });
+        return res.status(201).json({ msg: "Address successfully removed" });
+      } catch (error) {
+        console.log(error);
       }
     });
   }
