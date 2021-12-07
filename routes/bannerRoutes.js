@@ -1,4 +1,5 @@
 const app = require("express");
+const path = require("path");
 const router = app.Router();
 
 var multer = require("multer");
@@ -7,7 +8,7 @@ var storage = multer.diskStorage({
     cb(null, "public/images");
   },
   filename: function (req, file, cb) {
-    cb(null, "banner" + Date.now() + "_" + file.originalname);
+    cb(null, "banner_" + Date.now() + path.extname(file.originalname));
   },
 });
 
